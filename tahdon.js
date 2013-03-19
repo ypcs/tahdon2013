@@ -81,7 +81,7 @@ $(document).ready(function() {
                 [items[items.length - 1][0], 120000]
             ],
             color: "#ff55ff",
-            label: "Pieni eduskuntaryhmä (KD:n äänimäärä eduskuntavaaleissa 2011)"
+            label: "Eduskuntaryhmä (vaalit 2011)"
         },
         /*{
             data: [
