@@ -43,26 +43,46 @@ $(document).ready(function() {
     $.getJSON(stats_url, function(data) {
         var items = data.data;
         var latest = new Date((2 * 3600 + data.meta.latest) * 1000.0);
-        
-        
-
-
+     
         items.sort(function(a, b) {
             return a[0] - b[0];
         });
 
         var m = 0, md = 0;
-        
+        var diff = 0, dstart = 0, dstop = 0;
+        derivative = new Array();
+        smoothderivative = new Array();
+
         for (var i=0; i<items.length; i++) {
             // fix utc => utc+2
             items[i][0] = (items[i][0] + 2 * 3600)* 1000.0;
             if (items[i][1] > m) {m = items[i][1];}
             if (items[i][0] > md) {md = items[i][0];}
         }
+
+        for (var i=0; i<items.length; i++) { // calculate derivative
+            var dstop = i;
+            if (i == 0) { dstop = 1; }
+            for (var dstart=dstop; dstart>0 && items[dstop][0]-items[dstart][0]<7*60*1000.0; dstart--) {} // go backwards (max 7mins)
+            diff = (items[dstop][1] - items[dstart][1]) * (3600 * 1000.0);
+            diff /= items[dstop][0] - items[dstart][0];
+            derivative.push([ items[i][0], diff]); 
+        }
+        smoothderivative = new Array();
+        // smoothing, simple rectangular window -60 mins to now 
+        for (var i=0;i<items.length; i++) { 
+            var dstop = i;
+            if (i == 0) { dstop = 1; }
+            for (var dstart=dstop; dstart>0 && items[dstop][0]-items[dstart][0]<3600*1000.0; dstart--) {} // go backwards (max 60mins)
+            diff = (items[dstop][1] - items[dstart][1]) * (3600 * 1000.0);
+            diff /= items[dstop][0] - items[dstart][0];
+            smoothderivative.push([ items[i][0], diff]); 
+        }
         
         var dm = new Date(md);
         $("#stats").text("Allekirjoituksia klo " + displayTime(latest) + ' yhteensä ' + m  + 'kpl.');
-        
+
+     
         var plot = $.plot('#chart', [{
             data: items,
             label: "Allekirjoituksia"
@@ -83,14 +103,6 @@ $(document).ready(function() {
             color: "#ff55ff",
             label: "Eduskuntaryhmä (vaalit 2011)"
         },
-        /*{
-            data: [
-                [items[0][0], 522931],
-                [items[items.length - 1][0], 522931]
-            ],
-            color: "#ffff00",
-            label: "Helmikuussa 1899 kerättiin Suomen valtiopäivien asemaa puolustavaan Suomen adressiin 522 931 allekirjoitusta 11 päivässä"
-        },*/
         {
             data: [
                 [items[0][0], 69381],
@@ -144,5 +156,38 @@ $(document).ready(function() {
                 }
             
         });
+        
+        var plot2 = $.plot('#chart2', [
+        {
+            data: derivative,
+            label: "Hetkellinen nopeus (allekirjoitusta tunnissa)"
+        },
+        {
+            data: smoothderivative,
+            label: "Allekirjoituksia viimeisen tunnin aikana"
+        }], {
+            xaxis: {
+                mode: "time"
+            },
+            series: {
+                lines: {
+                    show: true
+                },
+                points: {
+                    show: true
+                }
+            },
+            grid: {
+                hoverable: true,
+                autoHighlight: false,
+                clickable: true
+            }});
+
+        var legends2 = $("#chart2 .legendlabel");
+        legends.each(function() {
+            $(this).css('width', $(this).width());
+        });
+
+
     });
 });
