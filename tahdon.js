@@ -7,6 +7,25 @@
 var stats_url = 'http://tmp.ypcs.fi/c/tahdon2013/stats.json';
 //var stats_url = 'http://localhost/tahdon2013/stats.json';
 
+function displayTime() {
+    var str = "";
+
+    var currentTime = new Date()
+    var hours = currentTime.getHours()
+    var minutes = currentTime.getMinutes()
+    var seconds = currentTime.getSeconds()
+
+    if (minutes < 10) {
+        minutes = "0" + minutes
+    }
+    if (seconds < 10) {
+        seconds = "0" + seconds
+    }
+    str += hours + ":" + minutes;
+    
+    return str;
+}
+
 $(document).ready(function() {
         function showTooltip(x, y, contents) {
             $("<div id='tooltip'>" + contents + "</div>").css({
@@ -23,6 +42,10 @@ $(document).ready(function() {
 
     $.getJSON(stats_url, function(data) {
         var items = data.data;
+        var latest = new Date((2 * 3600 + data.meta.latest) * 1000.0);
+        
+        
+
 
         items.sort(function(a, b) {
             return a[0] - b[0];
@@ -38,7 +61,7 @@ $(document).ready(function() {
         }
         
         var dm = new Date(md);
-        $("#stats").text("Allekirjoituksia " + m  + 'kpl');
+        $("#stats").text("Allekirjoituksia klo " + displayTime(latest) + ' yhteensä ' + m  + 'kpl.');
         
         var plot = $.plot('#chart', [{
             data: items,
