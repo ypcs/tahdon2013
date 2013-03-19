@@ -77,11 +77,27 @@ $(document).ready(function() {
         },
         {
             data: [
+                [items[0][0], 120000],
+                [items[items.length - 1][0], 120000]
+            ],
+            color: "#ff55ff",
+            label: "Pieni eduskuntaryhmä"
+        },
+        /*{
+            data: [
+                [items[0][0], 522931],
+                [items[items.length - 1][0], 522931]
+            ],
+            color: "#ffff00",
+            label: "Helmikuussa 1899 kerättiin Suomen valtiopäivien asemaa puolustavaan Suomen adressiin 522 931 allekirjoitusta 11 päivässä"
+        },*/
+        {
+            data: [
                 [items[0][0], 69381],
                 [items[items.length - 1][0], 69381]
             ],
             color: "#ccffcc",
-            label: "Turkistarhausaloitteen allekirjoittajia (noin)"
+            label: "Turkistarhausaloitteen allekirjoittajia"
         },
         ], {
             xaxis: {
