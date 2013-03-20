@@ -102,8 +102,24 @@ $(document).ready(function() {
                 [items[0][0], 118453],
                 [items[items.length - 1][0], 118453]
             ],
-            color: "#ff55ff",
-            label: "Eduskuntaryhmä (vaalit 2011)"
+            color: "#0135A5",
+            label: "Kristillisdemokraatit (KD) (vaalit 2011)"
+        },
+        {
+            data: [
+                [items[0][0], 125785],
+                [items[items.length - 1][0], 125785]
+            ],
+            color: "#007ac9",
+            label: "Suomen ruotsalainen kansanpuolue (RKP) (vaalit 2011)"
+        },
+        {
+            data: [
+                [items[0][0], 213172],
+                [items[items.length - 1][0], 213172]
+            ],
+            color: "#61bf1a",
+            label: "Vihreä liitto (Vihr) (vaalit 2011)"
         },
         {
             data: [
