@@ -18,3 +18,20 @@ html, body {
 #stats {
 font-weight: bold;
 }
+
+
+    #chart .button {
+        position: absolute;
+        cursor: pointer;
+    }
+
+    #chart div.button {
+        font-size: smaller;
+        color: #999;
+        background-color: #eee;
+        padding: 2px;
+    }
+    .message {
+        padding-left: 50px;
+        font-size: smaller;
+    }

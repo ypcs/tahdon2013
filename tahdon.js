@@ -43,7 +43,8 @@ $(document).ready(function() {
     $.getJSON(stats_url, function(data) {
         var items = data.data;
         var latest = new Date((2 * 3600 + data.meta.latest) * 1000.0);
-     
+        var placeholder = $("#chart");
+
         items.sort(function(a, b) {
             return a[0] - b[0];
         });
@@ -83,7 +84,7 @@ $(document).ready(function() {
         $("#stats").text("Allekirjoituksia klo " + displayTime(latest) + ' yhteensä ' + m  + 'kpl.');
 
      
-        var plot = $.plot('#chart', [{
+        var plot = $.plot(placeholder, [{
             data: items,
             label: "Allekirjoituksia"
         },
@@ -127,6 +128,16 @@ $(document).ready(function() {
                 hoverable: true,
                 autoHighlight: false,
                 clickable: true
+            },
+            zoom: {
+                interactive: true
+            },
+            pan: {
+                interactive: true
+            },
+            legend: {
+                show: true,
+                position: "nw"
             }
         }); 
 
@@ -136,7 +147,7 @@ $(document).ready(function() {
         });
 
         var previousPoint = null;
-        $("#chart").bind("plothover", function (event, pos, item) {          
+        placeholder.bind("plothover", function (event, pos, item) {          
                 if (item) {
                     if (previousPoint != item.dataIndex) {
 
@@ -188,6 +199,54 @@ $(document).ready(function() {
             $(this).css('width', $(this).width());
         });
 
+
+
+
+// show pan/zoom messages to illustrate events 
+
+        placeholder.bind("plotpan", function (event, plot) {
+            var axes = plot.getAxes();
+            $(".message").html("Panning to x: "  + axes.xaxis.min.toFixed(2)
+            + " &ndash; " + axes.xaxis.max.toFixed(2)
+            + " and y: " + axes.yaxis.min.toFixed(2)
+            + " &ndash; " + axes.yaxis.max.toFixed(2));
+        });
+
+        placeholder.bind("plotzoom", function (event, plot) {
+            var axes = plot.getAxes();
+            $(".message").html("Zooming to x: "  + axes.xaxis.min.toFixed(2)
+            + " &ndash; " + axes.xaxis.max.toFixed(2)
+            + " and y: " + axes.yaxis.min.toFixed(2)
+            + " &ndash; " + axes.yaxis.max.toFixed(2));
+        });
+
+        // add zoom out button 
+
+        $("<div class='button' style='right:20px;top:20px'>zoom out</div>")
+            .appendTo(placeholder)
+            .click(function (event) {
+                event.preventDefault();
+                plot.zoomOut();
+            });
+
+        // and add panning buttons
+
+        // little helper for taking the repetitive work out of placing
+        // panning arrows
+
+        function addArrow(dir, right, top, offset) {
+            $("<img class='button' src='arrow-" + dir + ".gif' style='right:" + right + "px;top:" + top + "px'>")
+                .appendTo(placeholder)
+                .click(function (e) {
+                    e.preventDefault();
+                    plot.pan(offset);
+                });
+        }
+
+        addArrow("left", 55, 60, { left: -100 });
+        addArrow("right", 25, 60, { left: 100 });
+        addArrow("up", 40, 45, { top: -100 });
+        addArrow("down", 40, 75, { top: 100 });
 
     });
 });
