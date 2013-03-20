@@ -26,6 +26,8 @@ function displayTime() {
     return str;
 }
 
+var title_suffix = 'Tahdon2013 -allekirjoitusseuranta';
+
 $(document).ready(function() {
         function showTooltip(x, y, contents) {
             $("<div id='tooltip'>" + contents + "</div>").css({
@@ -60,6 +62,8 @@ $(document).ready(function() {
             if (items[i][1] > m) {m = items[i][1];}
             if (items[i][0] > md) {md = items[i][0];}
         }
+
+        document.title = m + ' - ' + title_suffix;
 
         for (var i=0; i<items.length; i++) { // calculate derivative
             var dstop = i;
