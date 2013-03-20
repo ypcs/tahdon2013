@@ -45,8 +45,9 @@ $(document).ready(function() {
     $.getJSON(stats_url, function(data) {
         var items = data.data;
         var latest = new Date((2 * 3600 + data.meta.latest) * 1000.0);
+        var max = data.meta.max;
         var placeholder = $("#chart");
-
+        $("#stats").text("Allekirjoituksia klo " + displayTime(latest) + ' yhteensä ' + max  + 'kpl.');
 
         var m = 0, md = 0;
         var diff = 0, dstart = 0, dstop = 0;
@@ -82,7 +83,6 @@ $(document).ready(function() {
         }
         
         var dm = new Date(md);
-        $("#stats").text("Allekirjoituksia klo " + displayTime(latest) + ' yhteensä ' + m  + 'kpl.');
 
      
         var plot = $.plot(placeholder, [{
