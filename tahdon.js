@@ -134,10 +134,10 @@ $(document).ready(function() {
                 clickable: true
             },
             zoom: {
-                interactive: true
+                interactive: false
             },
             pan: {
-                interactive: true
+                interactive: false
             },
             legend: {
                 show: true,
@@ -226,6 +226,12 @@ $(document).ready(function() {
 
         // add zoom out button 
 
+        $("<div class='button' style='right:80px;top:20px'>zoom in</div>")
+            .appendTo(placeholder)
+            .click(function (event) {
+                event.preventDefault();
+                plot.zoom();
+            });
         $("<div class='button' style='right:20px;top:20px'>zoom out</div>")
             .appendTo(placeholder)
             .click(function (event) {
