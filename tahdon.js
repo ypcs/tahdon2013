@@ -47,6 +47,8 @@ $(document).ready(function() {
         var latest = new Date((2 * 3600 + data.meta.latest) * 1000.0);
         var max = data.meta.max;
         var placeholder = $("#chart");
+
+        document.title = max + ' - ' + title_suffix;
         $("#stats").text("Allekirjoituksia klo " + displayTime(latest) + ' yhteensä ' + max  + 'kpl.');
 
         var m = 0, md = 0;
@@ -61,7 +63,7 @@ $(document).ready(function() {
             if (items[i][0] > md) {md = items[i][0];}
         }
 
-        document.title = m + ' - ' + title_suffix;
+        
 
         for (var i=0; i<items.length; i++) { // calculate derivative
             var dstop = i;
