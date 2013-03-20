@@ -99,8 +99,8 @@ $(document).ready(function() {
         },
         {
             data: [
-                [items[0][0], 120000],
-                [items[items.length - 1][0], 120000]
+                [items[0][0], 118453],
+                [items[items.length - 1][0], 118453]
             ],
             color: "#ff55ff",
             label: "Eduskuntaryhmä (vaalit 2011)"
