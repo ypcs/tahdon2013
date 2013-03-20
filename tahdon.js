@@ -47,9 +47,6 @@ $(document).ready(function() {
         var latest = new Date((2 * 3600 + data.meta.latest) * 1000.0);
         var placeholder = $("#chart");
 
-        items.sort(function(a, b) {
-            return a[0] - b[0];
-        });
 
         var m = 0, md = 0;
         var diff = 0, dstart = 0, dstop = 0;
