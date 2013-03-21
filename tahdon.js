@@ -5,12 +5,18 @@
  */
 
 var stats_url = 'http://tmp.ypcs.fi/c/tahdon2013/stats.json';
+var latest_url = 'http://api.ypcs.fi/api/v1/initiativestatus/?format=json&initiative=3&order_by=-timestamp&limit=1';
 //var stats_url = 'http://localhost/tahdon2013/stats.json';
+var autoupdate = false;
+var autoupdate_timeout = 5000; // 5 seconds (5000ms)
+var title_suffix = 'Tahdon2013 -allekirjoitusseuranta';
 
-function displayTime() {
+
+function displayTime(d) {
     var str = "";
 
-    var currentTime = new Date()
+    //var currentTime = new Date()
+    var currentTime = d;
     var hours = currentTime.getHours()
     var minutes = currentTime.getMinutes()
     var seconds = currentTime.getSeconds()
@@ -21,12 +27,33 @@ function displayTime() {
     if (seconds < 10) {
         seconds = "0" + seconds
     }
-    str += hours + ":" + minutes;
+    str += hours + ":" + minutes + ":" + seconds;
     
     return str;
 }
 
-var title_suffix = 'Tahdon2013 -allekirjoitusseuranta';
+function updateTitle(c) {
+    document.title = c + ' - ' + title_suffix;
+}
+
+function updateLabel(t, c) {
+    $("#stats").text("Allekirjoituksia klo " + displayTime(t) + ' yhteensä ' + c  + 'kpl.');
+}
+
+function updateLatest() {
+    $.getJSON(latest_url, function(data) {
+        var t = new Date(data.objects[0].timestamp);
+        var c = data.objects[0].supportCount;
+
+        updateTitle(c);
+        updateLabel(t, c);
+    });
+
+    if (autoupdate) {
+        setTimeout('updateLatest()', autoupdate_timeout);
+    }
+}
+
 
 $(document).ready(function() {
         function showTooltip(x, y, contents) {
@@ -48,8 +75,7 @@ $(document).ready(function() {
         var max = data.meta.max;
         var placeholder = $("#chart");
 
-        document.title = max + ' - ' + title_suffix;
-        $("#stats").text("Allekirjoituksia klo " + displayTime(latest) + ' yhteensä ' + max  + 'kpl.');
+        updateTitle(max);
 
         var m = 0, md = 0;
         var diff = 0, dstart = 0, dstop = 0;
