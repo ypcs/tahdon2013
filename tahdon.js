@@ -4,13 +4,35 @@
  * @author Ville Korhonen <ville@xd.fi>
  */
 
+var initiate_id = 3;
+
 var stats_url = 'http://tmp.ypcs.fi/c/tahdon2013/stats.json';
-var latest_url = 'http://api.ypcs.fi/api/v1/initiativestatus/?format=json&initiative=3&order_by=-timestamp&limit=1';
+var latest_url = 'http://api.ypcs.fi/api/v1/initiativestatus.json';
+var limits_url = 'http://api.ypcs.fi/api/v1/initiativelimit.json';
 //var stats_url = 'http://localhost/tahdon2013/stats.json';
-var autoupdate = false;
+var autoupdate = true;
 var autoupdate_timeout = 5000; // 5 seconds (5000ms)
 var title_suffix = 'Tahdon2013 -allekirjoitusseuranta';
 
+var currentLimits = new Array();
+
+
+
+function displayLimits(m) {
+    var params = {
+        order_by: "-count",
+        count__lte: m + Math.round(m * 0.10)
+    };
+    var url = limits_url + '?' + $.param(params);
+
+    $.getJSON(url, function(data) {
+        var limits = data.objects;
+
+        for (var i=0; i<limits.length; i++) {
+            currentLimits.push(flotLimit(limits[i]));
+        }
+    });
+}
 
 function displayTime(d) {
     var str = "";
@@ -41,7 +63,13 @@ function updateLabel(t, c) {
 }
 
 function updateLatest() {
-    $.getJSON(latest_url, function(data) {
+    var params = {
+        initiative: initiate_id,
+        order_by: "-timestamp",
+        limit: 1
+    };
+    var url = latest_url + '?' + $.param(params);
+    $.getJSON(url, function(data) {
         var t = new Date(data.objects[0].timestamp);
         var c = data.objects[0].supportCount;
 
@@ -56,6 +84,10 @@ function updateLatest() {
 
 
 $(document).ready(function() {
+    updateLatest();
+
+    displayLimits(200000);
+
         function showTooltip(x, y, contents) {
             $("<div id='tooltip'>" + contents + "</div>").css({
                 position: "absolute",
@@ -111,6 +143,7 @@ $(document).ready(function() {
         }
         
         var dm = new Date(md);
+
 
      
         var plot = $.plot(placeholder, [{
