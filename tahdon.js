@@ -86,7 +86,7 @@ function updateLatest() {
 $(document).ready(function() {
     updateLatest();
 
-    displayLimits(200000);
+    //displayLimits(200000);
 
         function showTooltip(x, y, contents) {
             $("<div id='tooltip'>" + contents + "</div>").css({
