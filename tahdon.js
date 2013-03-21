@@ -7,7 +7,8 @@
 var initiate_id = 3;
 
 var stats_url = 'http://tmp.ypcs.fi/c/tahdon2013/stats.json';
-var latest_url = 'http://api.ypcs.fi/api/v1/initiativestatus.json';
+//var latest_url = 'http://api.ypcs.fi/api/v1/initiativestatus.json';
+var latest_url = 'http://tmp.ypcs.fi/c/tahdon2013/small.json';
 var limits_url = 'http://api.ypcs.fi/api/v1/initiativelimit.json';
 //var stats_url = 'http://localhost/tahdon2013/stats.json';
 var autoupdate = true;
