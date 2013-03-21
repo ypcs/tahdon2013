@@ -62,10 +62,10 @@ var currentLimits = [
         title: 'Äänioikeutettuja 2012 (Lappi)',
         limit: 147793
     },
-    {
+    /*{
         title: 'Äänioikeutettuja 2012 (Vaasa)',
         limit: 347141
-    },
+    },*/
     {
         title: 'Äänioikeutettuja 2012 (Pohjois-Savo)',
         limit: 200898
