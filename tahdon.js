@@ -14,10 +14,110 @@ var limits_url = 'http://api.ypcs.fi/api/v1/initiativelimit.json';
 var autoupdate = true;
 var autoupdate_timeout = 10000; // 5 seconds (5000ms)
 var title_suffix = 'Tahdon2013 -allekirjoitusseuranta';
+var plot_options = {
+    xaxis: {
+        mode: "time"
+    },
+    series: {
+        lines: {
+            show: true
+        },
+        points: {
+            show: true
+        }
+    },
+    grid: {
+        hoverable: true,
+        autoHighlight: false,
+        clickable: true
+    },
+    zoom: {
+        interactive: false
+    },
+    pan: {
+        interactive: false
+    },
+    legend: {
+        show: true,
+        position: "nw"
+    }
+};
 
-var currentLimits = new Array();
+var currentLimits = [
+    {
+        title: 'Eduskuntakäsittelyn allekirjoitusraja',
+        limit: 50000,
+        color: '#ff0000'
+    },
+    {
+        title: 'Turkistarhausaloitteen allekirjoittajia',
+        limit: 69381,
+        color: '#ccffcc'
+    },
+    {
+        title: 'Äänioikeutettuja 2012 (Keski-Suomi)',
+        limit: 219668
+    },
+    {
+        title: 'Äänioikeutettuja 2012 (Lappi)',
+        limit: 147793
+    },
+    {
+        title: 'Äänioikeutettuja 2012 (Vaasa)',
+        limit: 347141
+    },
+    {
+        title: 'Äänioikeutettuja 2012 (Pohjois-Savo)',
+        limit: 200898
+    },
+    {
+        title: 'Äänioikeutettuja 2012 (Pohjois-Karjala)',
+        limit: 134965
+    },
+    /*{
+        title: 'Äänioikeutettuja 2012 (Oulu)',
+        limit: 367292
+    },*/
+    {
+        title: 'Äänioikeutettuja 2012 (Etelä-Savo)',
+        limit: 127511
+    },
+    {
+        title: 'Äänioikeutettuja 2012 (Satakunta)',
+        limit: 182879
+    },
+    /*{
+        title: 'Äänioikeutettuja 2012 (Keski-Suomi)',
+        limit: 219668
+    },
+    {
+        title: 'Äänioikeutettuja 2012 (Keski-Suomi)',
+        limit: 219668
+    },
+    {
+        title: 'Äänioikeutettuja 2012 (Keski-Suomi)',
+        limit: 219668
+    },
+    {
+        title: 'Äänioikeutettuja 2012 (Keski-Suomi)',
+        limit: 219668
+    },*/
 
+];
 
+function formatLimit(limit, min, max) {
+    var s = {
+        data: [
+            [min, limit.limit],
+            [max, limit.limit]
+        ],
+        label: limit.title
+    };
+    if (limit.color) {
+        s.color = limit.color;
+    }
+    return s;
+}
 
 function displayLimits(m) {
     var params = {
@@ -145,76 +245,22 @@ $(document).ready(function() {
         
         var dm = new Date(md);
 
+        var max_v = items[items.length - 1][0];
+        var min_v = items[0][0];
+
+        var values = [
+            {
+                data: items,
+                label: "Allekirjoituksia"
+            }
+        ];
+
+        for (var i=0; i<currentLimits.length; i++) {
+            values.push(formatLimit(currentLimits[i], min_v, max_v));
+        }
 
      
-        var plot = $.plot(placeholder, [{
-            data: items,
-            label: "Allekirjoituksia"
-        },
-        {
-            data: [
-                [items[0][0], 50000],
-                [items[items.length - 1][0], 50000]
-            ],
-            color: "#ff0000",
-            label: "Eduskuntakäsittelyn allekirjoitusraja"
-        },
-        {
-            data: [
-                [items[0][0], 118453],
-                [items[items.length - 1][0], 118453]
-            ],
-            label: "Puolue eduskuntavaaleissa 2011"
-        },
-        {
-            data: [
-                [items[0][0], 125785],
-                [items[items.length - 1][0], 125785]
-            ],
-            label: "Puolue eduskuntavaaleissa 2011"
-        },
-        {
-            data: [
-                [items[0][0], 213172],
-                [items[items.length - 1][0], 213172]
-            ],
-            label: "Puolue eduskuntavaaleissa 2011"        },
-        {
-            data: [
-                [items[0][0], 69381],
-                [items[items.length - 1][0], 69381]
-            ],
-            color: "#ccffcc",
-            label: "Turkistarhausaloitteen allekirjoittajia"
-        },
-        ], {
-            xaxis: {
-                mode: "time"
-            },
-            series: {
-                lines: {
-                    show: true
-                },
-                points: {
-                    show: true
-                }
-            },
-            grid: {
-                hoverable: true,
-                autoHighlight: false,
-                clickable: true
-            },
-            zoom: {
-                interactive: false
-            },
-            pan: {
-                interactive: false
-            },
-            legend: {
-                show: true,
-                position: "nw"
-            }
-        }); 
+        var plot = $.plot(placeholder, values, plot_options); 
 
         var legends = $("#chart .legendlabel");
         legends.each(function() {
@@ -251,23 +297,7 @@ $(document).ready(function() {
         {
             data: smoothderivative,
             label: "Allekirjoituksia viimeisen tunnin aikana"
-        }], {
-            xaxis: {
-                mode: "time"
-            },
-            series: {
-                lines: {
-                    show: true
-                },
-                points: {
-                    show: true
-                }
-            },
-            grid: {
-                hoverable: true,
-                autoHighlight: false,
-                clickable: true
-            }});
+        }], plot_options);
 
         var legends2 = $("#chart2 .legendlabel");
         legends.each(function() {
