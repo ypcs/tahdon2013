@@ -12,7 +12,7 @@ var latest_url = 'http://tmp.ypcs.fi/c/tahdon2013/small.json';
 var limits_url = 'http://api.ypcs.fi/api/v1/initiativelimit.json';
 //var stats_url = 'http://localhost/tahdon2013/stats.json';
 var autoupdate = true;
-var autoupdate_timeout = 5000; // 5 seconds (5000ms)
+var autoupdate_timeout = 30000; // 5 seconds (5000ms)
 var title_suffix = 'Tahdon2013 -allekirjoitusseuranta';
 
 var currentLimits = new Array();
