@@ -1,31 +1,77 @@
----
-layout: default
-title: Tahdon 2013 -allekirjoitukset
-description: Tasa-arvoista avioliittolakia ajavan kansalaisaloitteen allekirjoitusseuranta
-image: http://www.tahdon2013.fi/assets/img/logo_fb_fin_tahdon2013.jpg
-scripts:
-    header:
-    footer:
-        - jquery.flot.js
-        - jquery.flot.time.js
-        - jquery.flot.navigate.js
-        - tahdon.js
-options:
-    head:
-        - <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="../../excanvas.min.js"></script><![endif]-->
-        - <meta http-equiv="Refresh" content="300"/>
----
-
+<!doctype html>
+<html lang="fi">
+<head>
+<meta charset="utf-8"/>
+<title>Tahdon2013 - allekirjoitukset</title>
+<!--
+Support w/ bitcoins: 1C9SXKz84bacb4JecEcT9CEjZnf5f9xKg2
+-->
+<link rel="prefetch" href="http://tmp.ypcs.fi/c/tahdon2013/stats.json"/>
+<link rel="prefetch" href="//connect.facebook.net/en_GB/all.js"/>
+<link rel="prefetch" href="//platform.twitter.com/widgets.js"/>
+<link rel="prefetch" href="//www.google-analytics.com/ga.js"/>
+<!--<link rel="prefetch" href="http://api.ypcs.fi/api/v1/initiativestatus/?format=json&amp;initiative=3&amp;order_by=-timestamp&amp;limit=1"/>-->
+<link rel="stylesheet" href="styles.css"/>
+<meta property="og:title" content="Tahdon 2013 - Kannatusilmoitukset">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://ypcs.fi/tahdon2013/">
+<meta property="og:image" content="http://www.tahdon2013.fi/assets/img/logo_fb_fin_tahdon2013.jpg">
+<meta property="og:site_name" content="ypcs.fi">
+<meta property="og:fb:app_id" content="479137325447561">
+<meta property="og:description" content="Tahdon 2013 / tasa-arvoista avioliittolakia ajavan kansalaisaloitteen allekirjoitukset">
+<meta property="og:email" content="ville@xd.fi">
+<meta property="og:phone_number" content="+358503032101">
+<meta http-equiv="refresh" content="300"/><!-- 5min -->
+<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="../../excanvas.min.js"></script><![endif]-->
+</head>
+<body>
+<h1>Tahdon2013 - allekirjoitukset</h1>
 <p><a href="https://www.kansalaisaloite.fi/fi/aloite/192">Allekirjoita aloite kansalaisaloite.fi:ssä</a>. <span id="stats"></span></p>
-<p class="small">Uusia äänirajoja lisätään sitä mukaan kun edellisiä on ohitettu. Katso myös <a href="http://yle.fi/vaalit/tulospalvelu/2011/">vaalitulokset</a>, joihin rajat pohjautuvat. <a href="https://www.facebook.com/ypoocs/posts/10151375464410745">Ehdota uusia ominaisuuksia</a>.</p>
+<p class="small">Uusia äänirajoja lisätään sitä mukaan kun edellisiä on ohitettu. Katso myös <a href="http://yle.fi/vaalit/tulospalvelu/2011/">vaalitulokset</a>, joihin rajat pohjautuvat.<a href="https://www.facebook.com/ypoocs/posts/10151375464410745">Ehdota uusia ominaisuuksia</a>.</p>
+
+<div id="likes" style="position: absolute, top: 1em; right: 1em;">
+<div class="fb-like" data-href="http://ypcs.fi/tahdon2013/" data-send="false" data-width="450" data-show-faces="true"></div>
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="ypcs" data-lang="fi" data-hashtags="tahdon2013">twiitti</a>
+</div>
+
+<div id="chart" style="width: 90%; height: 600px;"></div>
+
+<div id="chart2" style="width: 90%; height: 600px;"></div>
 
 
-<div id="chart" style="width: 100%; height: 400px;"></div>
+<script>
+!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+</script>
 
-<div id="chart2" style="width: 100%; height: 400px;"></div>
+<script src="jquery-1.9.1.min.js"></script>
+<script src="jquery.flot.js"></script>
+<script src="jquery.flot.time.js"></script>
+<script src="jquery.flot.navigate.js"></script>
+<script src="tahdon.js"></script>
 
-<h3>Kommentit</h3>
-{% include ext/fbcomment.html %}
-    
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=479137325447561";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
 <p class="small">CC-BY-SA <span class=""><a href="http://ypcs.fi/yhteystiedot/">&copy; Ville Korhonen (ypcs.fi)</a> &middot; Allekirjoitusnopeuskaavio: <a href="http://koti.kapsi.fi/~kuismam/tahdon/">Mikael Kuisma</a> (etu.suku@tut.fi)</span></p>
+
+
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-420043-25']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+
+</body>
+</html>
