@@ -54,10 +54,10 @@ var currentLimits = [
         limit: 69381,
         color: '#ccffcc'
     },
-    {
+    /*{
         title: 'Äänioikeutettuja 2012 (Keski-Suomi)',
         limit: 219668
-    },
+    },*/
     {
         title: 'Äänioikeutettuja 2012 (Lappi)',
         limit: 147793
@@ -66,10 +66,10 @@ var currentLimits = [
         title: 'Äänioikeutettuja 2012 (Vaasa)',
         limit: 347141
     },*/
-    {
+    /*{
         title: 'Äänioikeutettuja 2012 (Pohjois-Savo)',
         limit: 200898
-    },
+    },*/
     {
         title: 'Äänioikeutettuja 2012 (Pohjois-Karjala)',
         limit: 134965
